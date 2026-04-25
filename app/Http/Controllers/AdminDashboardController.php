@@ -16,29 +16,28 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        //
-        /**
-         *Num OF Rows = 100;
-         * Pagination = 10=> 100/10 = 10 Pages
-         */
-        // $admins = Admin::paginate(10);
-        //admin
-        $admins = Admin::count();
-        $users = User::count();
-        $cities = City::count();
-        $currencies = Currency::count();
+        // Admin-level counts (always available)
+        $admins      = Admin::count();
+        $users       = User::count();
+        $cities      = City::count();
+        $currencies  = Currency::count();
         $professions = Profession::count();
 
-        //user
-        $childs = user::where('parent', Auth::user()->id)->count();
-        $wallets = Wallet::where('user_id', Auth::user()->id)->count();
-        $debts = Debit::where('user_id', Auth::user()->id)->count();
-        //$admin = Admin::find(1);
-        // $admin->hasPermission();
-        return response()->view('cms.dashboard', 
-            ['admins' => $admins , 'users' => $users , 'cities' => $cities ,
-            'currencies' => $currencies , 'professions' , $professions,
-            'childs' => $childs , 'wallets' => $wallets,
-            'debts' => $debts]);
+        // User-level counts (only when a user is logged in)
+        $authUser = auth('user')->user();
+        $childs  = $authUser ? User::where('parent', $authUser->id)->count() : 0;
+        $wallets = $authUser ? Wallet::where('user_id', $authUser->id)->count() : 0;
+        $debts   = $authUser ? Debit::where('user_id', $authUser->id)->count() : 0;
+
+        return response()->view('cms.dashboard', [
+            'admins'      => $admins,
+            'users'       => $users,
+            'cities'      => $cities,
+            'currencies'  => $currencies,
+            'professions' => $professions,
+            'childs'      => $childs,
+            'wallets'     => $wallets,
+            'debts'       => $debts,
+        ]);
     }
 }

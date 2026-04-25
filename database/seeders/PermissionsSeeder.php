@@ -20,6 +20,7 @@ class PermissionsSeeder extends Seeder
 
         // ROLES
         Role::create(['name' => 'User', 'guard_name' => 'user']);
+        Role::create(['name' => 'Admin', 'guard_name' => 'admin']);
 
         //ADMIN PERMISSIONS
         Permission::create(['name' => 'Create-Admins', 'guard_name' => 'admin']);

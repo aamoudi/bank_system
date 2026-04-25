@@ -1,3 +1,16 @@
+{{-- TEMPORARY DEBUG - remove after testing --}}
+<div style="background:red;color:white;padding:10px;">
+    Guard: {{ auth()->getDefaultDriver() }}<br>
+    @php
+        $debugAdmin = auth('admin')->user();
+    @endphp
+    Admin guard user: {{ $debugAdmin ? $debugAdmin->full_name : 'NULL' }}<br>
+    Can Read-Admins: {{ $debugAdmin && $debugAdmin->can('Read-Admins') ? 'YES' : 'NO' }}<br>
+    Has Role Admin: {{ $debugAdmin && $debugAdmin->hasRole('Admin') ? 'YES' : 'NO' }}<br>
+    Roles: {{ $debugAdmin ? $debugAdmin->getRoleNames() : 'NULL' }}<br>
+    Permissions: {{ $debugAdmin ? $debugAdmin->getAllPermissions()->pluck('name') : 'NULL' }}
+</div>
+
 @extends('cms.parent')
 
 @section('title','Dashboard')

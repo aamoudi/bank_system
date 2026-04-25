@@ -50,14 +50,14 @@ Route::prefix('cms/user')->middleware('guest:user')->group(function () {
     Route::post('login', [UserAuthController::class, 'login'])->name('auth-user.login');
 });
 
-Route::prefix('cms/admin')->middleware('auth:admin,user', 'verified')->group(function () {
-    $admins = Admin::with(['city'])->paginate(10);
+Route::prefix('cms/admin')->middleware('auth:admin,user')->group(function () {
+    //$admins = Admin::with(['city'])->paginate(10);
     //Route::view('', 'cms.dashboard')->name('cms.dashboard');
     Route::get('', [AdminDashboardController::class, 'index'])->name('cms.dashboard');
-    Route::resource('users', UserController::class);
+    //Route::resource('users', UserController::class);
 });
 
-Route::prefix('cms/admin')->middleware('auth:admin', 'verified')->group(function () {
+Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
     Route::resource('cities', CityController::class);
     Route::resource('admins', AdminController::class);
     Route::resource('currencies', CurrencyController::class);
@@ -71,29 +71,36 @@ Route::prefix('cms/admin')->middleware('auth:admin', 'verified')->group(function
 
     Route::delete('currencies/{id}/restore', [CurrencyController::class, 'restore'])->name('currencies.restore');
 
-    Route::get('edit-password', [AdminAuthController::class, 'editPassword'])->name('auth.edit-password');
-    Route::put('update-password', [AdminAuthController::class, 'updatePassword'])->name('auth.update-password');
-
-    Route::get('edit-profile', [AdminAuthController::class, 'editProfile'])->name('auth.edit-profile');
-    Route::put('update-profile', [AdminAuthController::class, 'updateProfile'])->name('auth.update-profile');
-
-    Route::get('logout', [AdminAuthController::class, 'logout'])->name('auth.logout');
+    Route::get('admin-edit-password', [AdminAuthController::class, 'editPassword'])
+        ->name('auth.edit-password');
+    Route::put('admin-update-password', [AdminAuthController::class, 'updatePassword'])
+        ->name('auth.update-password');
+    Route::get('admin-edit-profile', [AdminAuthController::class, 'editProfile'])
+        ->name('auth.edit-profile');
+    Route::put('admin-update-profile', [AdminAuthController::class, 'updateProfile'])
+        ->name('auth.update-profile');
+    Route::get('logout', [AdminAuthController::class, 'logout'])
+        ->name('auth.logout');
 });
 
-Route::prefix('cms/admin')->middleware('auth:user', 'verified')->group(function () {
+Route::prefix('cms/admin')->middleware('auth:user')->group(function () {
     Route::resource('income-types', IncomeTypeController::class);
     Route::resource('expense-types', ExpenseTypeController::class);
     Route::resource('wallets', WalletController::class);
     Route::resource('debits', DebitController::class);
     Route::resource('transaction', TransactionController::class);
     Route::get('/wallettrans', [WalletController::class, 'transaction']);
-     Route::get('edit-password', [UserAuthController::class, 'editPassword'])->name('auth.edit-password');
-     Route::put('update-password', [UserAuthController::class, 'updatePassword'])->name('auth.update-password');
 
-     Route::get('edit-profile', [UserAuthController::class, 'editProfile'])->name('auth.edit-profile');
-     Route::put('update-profile', [UserAuthController::class, 'updateProfile'])->name('auth.update-profile');
-
-    Route::get('logout-user', [UserAuthController::class, 'logout'])->name('auth-user.logout');
+    Route::get('user-edit-password', [UserAuthController::class, 'editPassword'])
+        ->name('auth-user.edit-password');
+    Route::put('user-update-password', [UserAuthController::class, 'updatePassword'])
+        ->name('auth-user.update-password');
+    Route::get('user-edit-profile', [UserAuthController::class, 'editProfile'])
+        ->name('auth-user.edit-profile');
+    Route::put('user-update-profile', [UserAuthController::class, 'updateProfile'])
+        ->name('auth-user.update-profile');
+    Route::get('logout-user', [UserAuthController::class, 'logout'])
+        ->name('auth-user.logout');
 });
 
 // Route::prefix('cms/admin')->namespace('App\Http\Controllers\Auth')->middleware('guest:admin')->group(function () {
