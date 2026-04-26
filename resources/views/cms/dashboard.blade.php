@@ -1,5 +1,5 @@
-{{-- TEMPORARY DEBUG - remove after testing --}}
-<div style="background:red;color:white;padding:10px;">
+// TEMPORARY DEBUG - remove after testing
+{{-- <div style="background:red;color:white;padding:10px;">
     Guard: {{ auth()->getDefaultDriver() }}<br>
     @php
         $debugAdmin = auth('admin')->user();
@@ -9,7 +9,7 @@
     Has Role Admin: {{ $debugAdmin && $debugAdmin->hasRole('Admin') ? 'YES' : 'NO' }}<br>
     Roles: {{ $debugAdmin ? $debugAdmin->getRoleNames() : 'NULL' }}<br>
     Permissions: {{ $debugAdmin ? $debugAdmin->getAllPermissions()->pluck('name') : 'NULL' }}
-</div>
+</div> --}}
 
 @extends('cms.parent')
 
