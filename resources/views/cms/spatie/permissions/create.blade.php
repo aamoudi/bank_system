@@ -23,7 +23,7 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Create Role</h3>
+                        <h3 class="card-title">Create Permission</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -40,7 +40,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="name">Role Name</label>
+                                <label for="name">Permission Name</label>
                                 <input type="text" class="form-control" id="name" placeholder="Enter permission name">
                             </div>
                         </div>

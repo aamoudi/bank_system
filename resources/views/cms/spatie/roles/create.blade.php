@@ -1,9 +1,9 @@
 @extends('cms.parent')
 
-@section('title','Create Permission')
-@section('page-name','Create Permission')
-@section('main-page','Permissions')
-@section('sub-page','Create Permission')
+@section('title','Create Role')
+@section('page-name','Create Role')
+@section('main-page','Roles')
+@section('sub-page','Create Role')
 
 @section('styles')
 <!-- Select2 -->
@@ -23,7 +23,7 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Create Permission</h3>
+                        <h3 class="card-title">Create Role</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->

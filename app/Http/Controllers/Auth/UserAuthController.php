@@ -44,20 +44,33 @@ class UserAuthController extends Controller
     public function updatePassword(Request $request)
     {
         $validator = Validator($request->all(), [
-            'current_password' => 'required|string|password:user',
-            'new_password' => 'required|string|confirmed',
+            'current_password'          => 'required|string',
+            'new_password'              => 'required|string|min:6|confirmed',
             'new_password_confirmation' => 'required|string',
-            // 'new_password_confirmation' => 'required|string|same:new_password',
         ]);
 
         if (!$validator->fails()) {
-            // $user = User::findOrFail($request->user('admin')->id);
             $user = $request->user('user');
-            $user->password = Hash::make($request->get("new_password"));
-            $isSaved = $user->save();
+
+            if (!\Illuminate\Support\Facades\Hash::check(
+                $request->get('current_password'),
+                $user->password
+            )) {
+                return response()->json([
+                    'message' => 'Current password is incorrect'
+                ], 400);
+            }
+
+            $user->password = \Illuminate\Support\Facades\Hash::make(
+                $request->get('new_password')
+            );
+            $user->save();
+
             return response()->json(['message' => 'Password changed successfully'], 200);
         } else {
-            return response()->json(['message' => $validator->getMessageBag()->first()], 400);
+            return response()->json([
+                'message' => $validator->getMessageBag()->first()
+            ], 400);
         }
     }
 

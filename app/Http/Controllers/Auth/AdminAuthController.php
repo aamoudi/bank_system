@@ -46,27 +46,43 @@ class AdminAuthController extends Controller
     public function updatePassword(Request $request)
     {
         $validator = Validator($request->all(), [
-            'current_password' => 'required|string|password:admin',
-            'new_password' => 'required|string|confirmed',
+            'current_password'          => 'required|string',
+            'new_password'              => 'required|string|min:6|confirmed',
             'new_password_confirmation' => 'required|string',
-            // 'new_password_confirmation' => 'required|string|same:new_password',
         ]);
 
         if (!$validator->fails()) {
-            // $user = User::findOrFail($request->user('admin')->id);
-            $user = $request->user('admin');
-            $user->password = Hash::make($request->get("new_password"));
-            $isSaved = $user->save();
+            $admin = $request->user('admin');
+
+            // Manually verify the current password
+            if (!\Illuminate\Support\Facades\Hash::check(
+                $request->get('current_password'),
+                $admin->password
+            )) {
+                return response()->json([
+                    'message' => 'Current password is incorrect'
+                ], 400);
+            }
+
+            $admin->password = \Illuminate\Support\Facades\Hash::make(
+                $request->get('new_password')
+            );
+            $admin->save();
+
             return response()->json(['message' => 'Password changed successfully'], 200);
         } else {
-            return response()->json(['message' => $validator->getMessageBag()->first()], 400);
+            return response()->json([
+                'message' => $validator->getMessageBag()->first()
+            ], 400);
         }
     }
-
     public function editProfile(Request $request)
     {
         $cities = City::where('active', true)->get();
-        return response()->view('cms.auth.edit-profile', ['cities' => $cities, 'admin' => $request->user('admin')]);
+        return response()->view('cms.auth.edit-profile', [
+            'cities' => $cities,
+            'user' => $request->user('admin')  // was 'admin' => ..., view expects $user
+        ]);
     }
 
     public function updateProfile(Request $request)

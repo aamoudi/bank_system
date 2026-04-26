@@ -49,7 +49,12 @@ class AdminPermissionController extends Controller
      */
     public function store(Request $request, $adminId)
     {
-        //
+        // Block any permission changes on superAdmin
+        if ((int)$adminId === 1) {
+            return response()->json([
+                'message' => 'SuperAdmin permissions cannot be modified.'
+                ], 403);
+        }
         $validator = Validator($request->all(), [
             'permission_id' => 'required|exists:permissions,id|numeric',
             'active' => 'boolean',

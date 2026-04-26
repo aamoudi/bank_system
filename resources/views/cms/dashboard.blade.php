@@ -1,31 +1,31 @@
-// TEMPORARY DEBUG - remove after testing
+{{-- TEMPORARY DEBUG - remove after testing --}}
 {{-- <div style="background:red;color:white;padding:10px;">
-    Guard: {{ auth()->getDefaultDriver() }}<br>
-    @php
-        $debugAdmin = auth('admin')->user();
-    @endphp
-    Admin guard user: {{ $debugAdmin ? $debugAdmin->full_name : 'NULL' }}<br>
-    Can Read-Admins: {{ $debugAdmin && $debugAdmin->can('Read-Admins') ? 'YES' : 'NO' }}<br>
-    Has Role Admin: {{ $debugAdmin && $debugAdmin->hasRole('Admin') ? 'YES' : 'NO' }}<br>
-    Roles: {{ $debugAdmin ? $debugAdmin->getRoleNames() : 'NULL' }}<br>
-    Permissions: {{ $debugAdmin ? $debugAdmin->getAllPermissions()->pluck('name') : 'NULL' }}
-</div> --}}
-
+  Guard: {{ auth()->getDefaultDriver() }}<br>
+  @php
+    $debugAdmin = auth('admin')->user();
+  @endphp
+  Admin guard user: {{ $debugAdmin ? $debugAdmin->full_name : 'NULL' }}<br>
+  Can Read-Admins: {{ $debugAdmin && $debugAdmin->can('Read-Admins') ? 'YES' : 'NO' }}<br>
+  Has Role Admin: {{ $debugAdmin && $debugAdmin->hasRole('Admin') ? 'YES' : 'NO' }}<br>
+  Roles: {{ $debugAdmin ? $debugAdmin->getRoleNames() : 'NULL' }}<br>
+  Permissions: {{ $debugAdmin ? $debugAdmin->getAllPermissions()->pluck('name') : 'NULL' }}
+</div>
+ --}}
 @extends('cms.parent')
 
-@section('title','Dashboard')
-@section('page-name','')
-@section('main-page','')
-@section('sub-page','')
+@section('title', 'Dashboard')
+@section('page-name', '')
+@section('main-page', '')
+@section('sub-page', '')
 
 @section('styles')
-<!-- overlayScrollbars -->
-<link rel="stylesheet" href="{{ asset('cms/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{ asset('cms/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ asset('cms/plugins/daterangepicker/daterangepicker.css') }}">
 
 
-  
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -33,7 +33,8 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{{ asset('cms/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <link rel="stylesheet"
+    href="{{ asset('cms/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('cms/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- JQVMap -->
@@ -49,287 +50,274 @@
 @endsection
 
 @section('content')
-<!-- Main content -->
-<section class="content">
+  <!-- Main content -->
+  <section class="content">
     <div class="container-fluid">
-        <!-- Info boxes -->
-        @if (Auth::user()->hasRole('User'))
+      <!-- Info boxes -->
+      @if (Auth::user()->hasRole('User'))
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas  fa-users"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Childs</b></span>
-                        <span class="info-box-number"><b>{{$childs}}</b></span>
-                    </div>
-                    <!-- /.info-box-content -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <a href="{{ route('users.index') }}" style="text-decoration:none;">
+              <div class="info-box" style="cursor:pointer;">
+                <span class="info-box-icon bg-info elevation-1">
+                  <i class="fas fa-users"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text"><b>Childs</b></span>
+                  <span class="info-box-number"><b>{{ $childs }}</b></span>
                 </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-wallet"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Wallets</b></span>
-                        <span class="info-box-number"><b>{{ $wallets }}</b></span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-
-            <!-- fix for small devices only -->
-            <div class="clearfix hidden-md-up"></div>
-
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-wallet"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Debits</b></span>
-                        <span class="info-box-number"><b>{{ $debts }}</b></span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <!--<div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-coins"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Currencies</span>
-                <span class="info-box-number"> {{ $currencies }}</span>
               </div>
-            </div>
-          </div>-->
-            <!-- /.col -->
+            </a>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4">
+            <a href="{{ route('wallets.index') }}" style="text-decoration:none;">
+              <div class="info-box mb-3" style="cursor:pointer;">
+                <span class="info-box-icon bg-danger elevation-1">
+                  <i class="fas fa-wallet"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text"><b>Wallets</b></span>
+                  <span class="info-box-number"><b>{{ $wallets }}</b></span>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-4">
+            <a href="{{ route('debits.index') }}" style="text-decoration:none;">
+              <div class="info-box mb-3" style="cursor:pointer;">
+                <span class="info-box-icon bg-success elevation-1">
+                  <i class="fas fa-wallet"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text"><b>Debits</b></span>
+                  <span class="info-box-number"><b>{{ $debts }}</b></span>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
         <!-- /.row -->
-        @else
+      @else
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users-cog"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Admins</b></span>
-                        <span class="info-box-number">
-                            <b>{{$admins}}</b>
-                        </span>
-                    </div>
-                    <!-- /.info-box-content -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <a href="{{ route('admins.index') }}" style="text-decoration:none;">
+              <div class="info-box" style="cursor:pointer;">
+                <span class="info-box-icon bg-info elevation-1">
+                  <i class="fas fa-users-cog"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text"><b>Admins</b></span>
+                  <span class="info-box-number"><b>{{ $admins }}</b></span>
                 </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users"></i></span>
+              </div>
+            </a>
+          </div>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Users</b></span>
-                        <span class="info-box-number"><b>{{ $users }}</b></span>
-                    </div>
-                    <!-- /.info-box-content -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <a href="{{ route('users.index') }}" style="text-decoration:none;">
+              <div class="info-box mb-3" style="cursor:pointer;">
+                <span class="info-box-icon bg-danger elevation-1">
+                  <i class="fas fa-users"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text"><b>Users</b></span>
+                  <span class="info-box-number"><b>{{ $users }}</b></span>
                 </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
+              </div>
+            </a>
+          </div>
 
-            <!-- fix for small devices only -->
-            <div class="clearfix hidden-md-up"></div>
+          <div class="clearfix hidden-md-up"></div>
 
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-city"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Cities</b></span>
-                        <span class="info-box-number"><b>{{ $cities}}</b></span>
-                    </div>
-                    <!-- /.info-box-content -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <a href="{{ route('cities.index') }}" style="text-decoration:none;">
+              <div class="info-box mb-3" style="cursor:pointer;">
+                <span class="info-box-icon bg-success elevation-1">
+                  <i class="fas fa-city"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text"><b>Cities</b></span>
+                  <span class="info-box-number"><b>{{ $cities }}</b></span>
                 </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-coins"></i></span>
+              </div>
+            </a>
+          </div>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Currencies</b></span>
-                        <span class="info-box-number"><b> {{ $currencies }}</b></span>
-                    </div>
-                    <!-- /.info-box-content -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <a href="{{ route('currencies.index') }}" style="text-decoration:none;">
+              <div class="info-box mb-3" style="cursor:pointer;">
+                <span class="info-box-icon bg-warning elevation-1">
+                  <i class="fas fa-coins"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text"><b>Currencies</b></span>
+                  <span class="info-box-number"><b>{{ $currencies }}</b></span>
                 </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
+              </div>
+            </a>
+          </div>
         </div>
-        <!-- /.row -->
-        @endif
+      @endif
 
-        
-<!-- Main row -->
-<div class="row">
 
-<!-- /.Left col -->
-<!-- right col (We are only adding the ID to make the widgets sortable)-->
-<section class="col-lg-12 connectedSortable">
+      <!-- Main row -->
+      <div class="row">
 
-    <!-- Map card -->
-    <div class="card bg-gradient-primary" style="display: none;">
-        <div class="card-header border-0">
-            <h3 class="card-title">
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-12 connectedSortable">
+
+          <!-- Map card -->
+          <div class="card bg-gradient-primary" style="display: none;">
+            <div class="card-header border-0">
+              <h3 class="card-title">
                 <i class="fas fa-map-marker-alt mr-1"></i>
                 Visitors
-            </h3>
-            <!-- card tools -->
-            <div class="card-tools">
+              </h3>
+              <!-- card tools -->
+              <div class="card-tools">
                 <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                    <i class="far fa-calendar-alt"></i>
+                  <i class="far fa-calendar-alt"></i>
                 </button>
                 <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
+                  <i class="fas fa-minus"></i>
                 </button>
+              </div>
+              <!-- /.card-tools -->
             </div>
-            <!-- /.card-tools -->
-        </div>
-        <div class="card-body">
-            <div id="world-map" style="height: 250px; width: 100%;"></div>
-        </div>
-        <!-- /.card-body-->
-        <div class="card-footer bg-transparent">
-            <div class="row">
-                <div class="col-4 text-center">
-                    <div id="sparkline-1"></div>
-                    <div class="text-white">Visitors</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-4 text-center">
-                    <div id="sparkline-2"></div>
-                    <div class="text-white">Online</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-4 text-center">
-                    <div id="sparkline-3"></div>
-                    <div class="text-white">Sales</div>
-                </div>
-                <!-- ./col -->
+            <div class="card-body">
+              <div id="world-map" style="height: 250px; width: 100%;"></div>
             </div>
-            <!-- /.row -->
-        </div>
-    </div>
-    <!-- /.card -->
+            <!-- /.card-body-->
+            <div class="card-footer bg-transparent">
+              <div class="row">
+                <div class="col-4 text-center">
+                  <div id="sparkline-1"></div>
+                  <div class="text-white">Visitors</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-4 text-center">
+                  <div id="sparkline-2"></div>
+                  <div class="text-white">Online</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-4 text-center">
+                  <div id="sparkline-3"></div>
+                  <div class="text-white">Sales</div>
+                </div>
+                <!-- ./col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+          <!-- /.card -->
 
-    <!-- Calendar -->
-    <div class="card bg-gradient-success">
-        <div class="card-header border-0">
+          <!-- Calendar -->
+          <div class="card bg-gradient-success">
+            <div class="card-header border-0">
 
-            <h3 class="card-title">
+              <h3 class="card-title">
                 <i class="far fa-calendar-alt"></i>
                 Calendar
-            </h3>
-            <!-- tools card -->
-            <div class="card-tools">
+              </h3>
+              <!-- tools card -->
+              <div class="card-tools">
                 <!-- button with a dropdown -->
                 <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
-                        data-offset="-52">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="dropdown-menu" role="menu">
-                        <a href="#" class="dropdown-item">Add new event</a>
-                        <a href="#" class="dropdown-item">Clear events</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">View calendar</a>
-                    </div>
+                  <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
+                    data-offset="-52">
+                    <i class="fas fa-bars"></i>
+                  </button>
+                  <div class="dropdown-menu" role="menu">
+                    <a href="#" class="dropdown-item">Add new event</a>
+                    <a href="#" class="dropdown-item">Clear events</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">View calendar</a>
+                  </div>
                 </div>
                 <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <i class="fas fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
+                  <i class="fas fa-times"></i>
                 </button>
+              </div>
+              <!-- /. tools -->
             </div>
-            <!-- /. tools -->
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body pt-0">
-            <!--The calendar -->
-            <div id="calendar" style="width: 100%"></div>
-        </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-</section>
-<!-- right col -->
-</div>
-<!-- /.row (main row) -->
+            <!-- /.card-header -->
+            <div class="card-body pt-0">
+              <!--The calendar -->
+              <div id="calendar" style="width: 100%"></div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </section>
+        <!-- right col -->
+      </div>
+      <!-- /.row (main row) -->
 
     </div>
     <!--/. container-fluid -->
-</section>
-<!-- /.content -->
+  </section>
+  <!-- /.content -->
 @endsection
 
 @section('scripts')
-<!-- overlayScrollbars -->
-<script src="{{ asset('cms/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+  <!-- overlayScrollbars -->
+  <script src="{{ asset('cms/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 
-<!-- PAGE PLUGINS -->
-<!-- jQuery Mapael -->
-<script src="{{ asset('cms/plugins/jquery-mousewheel/jquery.mousewheel.js') }}"></script>
-<script src="{{ asset('cms/plugins/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('cms/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
-<script src="{{ asset('cms/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
-<!-- ChartJS -->
-<script src="{{ asset('cms/plugins/chart.js/Chart.min.js') }}"></script>
-<script src="{{ asset('cms/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('cms/plugins/daterangepicker/daterangepicker.js') }}"></script>
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery Mapael -->
+  <script src="{{ asset('cms/plugins/jquery-mousewheel/jquery.mousewheel.js') }}"></script>
+  <script src="{{ asset('cms/plugins/raphael/raphael.min.js') }}"></script>
+  <script src="{{ asset('cms/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
+  <script src="{{ asset('cms/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
+  <!-- ChartJS -->
+  <script src="{{ asset('cms/plugins/chart.js/Chart.min.js') }}"></script>
+  <script src="{{ asset('cms/plugins/moment/moment.min.js') }}"></script>
+  <script src="{{ asset('cms/plugins/daterangepicker/daterangepicker.js') }}"></script>
 
-<!-- PAGE SCRIPTS -->
-<script src="{{ asset('cms/dist/js/pages/dashboard2.js') }}"></script>
+  <!-- PAGE SCRIPTS -->
+  <script src="{{ asset('cms/dist/js/pages/dashboard2.js') }}"></script>
 
 
-<!-- jQuery -->
-<script src="{{ asset('cms/plugins/jquery/jquery.min.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('cms/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- ChartJS -->
-<script src="{{ asset('cms/plugins/chart.js/Chart.min.js') }}"></script>
-<!-- Sparkline -->
-<script src="{{ asset('cms/plugins/sparklines/sparkline.js') }}"></script>
-<!-- JQVMap -->
-<script src="{{ asset('cms/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('cms/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-<!-- jQuery Knob Chart -->
-<script src="{{ asset('cms/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-<!-- daterangepicker -->
-<script src="{{ asset('cms/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('cms/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ asset('cms/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-<!-- Summernote -->
-<script src="{{ asset('cms/plugins/summernote/summernote-bs4.min.js') }}"></script>
-<!-- overlayScrollbars -->
-<script src="{{ asset('cms/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('cms/dist/js/adminlte.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('cms/dist/js/demo.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('cms/dist/js/pages/dashboard.js') }}"></script>
+  <!-- jQuery -->
+  <script src="{{ asset('cms/plugins/jquery/jquery.min.js') }}"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="{{ asset('cms/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="{{ asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <!-- ChartJS -->
+  <script src="{{ asset('cms/plugins/chart.js/Chart.min.js') }}"></script>
+  <!-- Sparkline -->
+  <script src="{{ asset('cms/plugins/sparklines/sparkline.js') }}"></script>
+  <!-- JQVMap -->
+  <script src="{{ asset('cms/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+  <script src="{{ asset('cms/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="{{ asset('cms/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+  <!-- daterangepicker -->
+  <script src="{{ asset('cms/plugins/moment/moment.min.js') }}"></script>
+  <script src="{{ asset('cms/plugins/daterangepicker/daterangepicker.js') }}"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="{{ asset('cms/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+  <!-- Summernote -->
+  <script src="{{ asset('cms/plugins/summernote/summernote-bs4.min.js') }}"></script>
+  <!-- overlayScrollbars -->
+  <script src="{{ asset('cms/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{ asset('cms/dist/js/adminlte.js') }}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{ asset('cms/dist/js/demo.js') }}"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="{{ asset('cms/dist/js/pages/dashboard.js') }}"></script>
 @endsection

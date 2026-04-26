@@ -65,7 +65,8 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
 
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
-
+    Route::resource('users', UserController::class);
+    
     Route::resource('admins.permissions', AdminPermissionController::class);
     Route::resource('role.permissions', RolePermissionController::class);
 

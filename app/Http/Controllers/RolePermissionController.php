@@ -16,8 +16,10 @@ class RolePermissionController extends Controller
     public function index($roleId)
     {
         //
-        $permissions = Permission::where('guard_name', 'user')->get();
-        $role = Role::findById($roleId, 'user');
+        $role = Role::findOrFail($roleId); // was findById($roleId, 'user')
+
+        // Show permissions matching the role's guard
+        $permissions = Permission::where('guard_name', $role->guard_name)->get();
 
         if ($role->permissions->count() > 0) {
             foreach ($permissions as $permission) {
@@ -27,7 +29,10 @@ class RolePermissionController extends Controller
                 }
             }
         }
-        return response()->view('cms.spatie.roles.index-permissions', ['roleId' => $roleId, 'permissions' => $permissions]);
+        return response()->view('cms.spatie.roles.index-permissions', [
+            'roleId' => $roleId,
+            'permissions' => $permissions
+        ]);
     }
 
     /**
@@ -54,13 +59,20 @@ class RolePermissionController extends Controller
         ]);
 
         if (!$validator->fails()) {
-            $permission = Permission::findById($request->get('permission_id'), 'user');
-            $role = Role::findById($roleId, 'user');
+            $role = Role::findOrFail($roleId); // was findById($roleId, 'user')
+            $permission = Permission::findById(
+                $request->get('permission_id'),
+                $role->guard_name  // use role's own guard
+            );
+
             if ($role->hasPermissionTo($permission))
                 $isSaved = $role->revokePermissionTo($permission);
             else
                 $isSaved = $role->givePermissionTo($permission);
-            return response()->json(['message' => $isSaved ? 'Permission assigned successfully' : "Failed to assign permission"], $isSaved ? 200 : 400);
+
+            return response()->json([
+                'message' => $isSaved ? 'Permission assigned successfully' : 'Failed to assign permission'
+            ], $isSaved ? 200 : 400);
         } else {
             return response()->json(['message' => $validator->getMessageBag()->first()], 400);
         }

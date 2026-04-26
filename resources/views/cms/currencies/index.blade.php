@@ -20,15 +20,15 @@
               <h3 class="card-title">Cities</h3>
 
               <!--<div class="card-tools">
-                              <div class="input-group input-group-sm" style="width: 150px;">
-                                  <input type="text" name="table_search" class="form-control float-right"
-                                      placeholder="Search">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control float-right"
+                                        placeholder="Search">
 
-                                  <div class="input-group-append">
-                                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                  </div>
-                              </div>
-                          </div>-->
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>-->
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -56,15 +56,15 @@
                       <td><span class="badge bg-success">{{ $currency->status }}</span></td>
                       <td><span class="badge bg-success">{{ $currency->trashed() ? 'True' : 'False' }}</span>
                       </td>
-                      <td>{{ $currency->created_at->format('Y-m-d') }}</td>
-                      <td>{{ $currency->updated_at->format('Y-m-d') }}</td>
+                      <td>{{ $currency->created_at ? $currency->created_at->format('Y-m-d') : '-' }}</td>
+                      <td>{{ $currency->updated_at ? $currency->updated_at->format('Y-m-d') : '-' }}</td>
                       <td>
                         <div class="btn-group">
                           <a href="{{ route('currencies.edit', $currency->id) }}" type="button" class="btn btn-info"><i
                               class="fas fa-edit"></i></a>
                           @if (!$currency->trashed())
-                            <a href="#" class="btn btn-danger" onclick="performDestroy({{ $currency->id }}, this)"><i
-                                class="fas fa-trash"></i></a>
+                            <a href="#" class="btn btn-danger"
+                              onclick="performDestroy({{ $currency->id }}, this)"><i class="fas fa-trash"></i></a>
                           @endif
                           @if ($currency->trashed())
                             <a href="#" class="btn btn-primary" onclick="restore({{ $currency->id }})"><i

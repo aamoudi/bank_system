@@ -71,7 +71,8 @@
                         <div class="btn-group">
                           <a href="{{ route('admins.edit', $admin->id) }}" type="button" class="btn btn-info"><i
                               class="fas fa-edit"></i></a>
-                          @if (Auth::user()->id != $admin->id)
+                          {{-- Hide delete for superAdmin (id=1) and self --}}
+                          @if($admin->id !== 1 && Auth::user()->id != $admin->id)
                             <a href="#" class="btn btn-danger" onclick="performDestroy({{ $admin->id }}, this)"><i
                                 class="fas fa-trash"></i></a>
                           @endif

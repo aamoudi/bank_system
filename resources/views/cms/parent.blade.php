@@ -350,127 +350,127 @@
                 </ul>
               </li>
             @endcanany
+            @if (Auth::guard('user')->check())
+              @canany(['Create-Income-Types', 'Read-Income-Types'])
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-money-check-alt"></i>
+                    <p>
+                      Income-Types
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    @can('Read-Income-Types')
+                      <li class="nav-item">
+                        <a href="{{ route('income-types.index') }}" class="nav-link">
+                          <i class="fas fa-list nav-icon"></i>
+                          <p>Index</p>
+                        </a>
+                      </li>
+                    @endcan
+                    @can('Create-Income-Types')
+                      <li class="nav-item">
+                        <a href="{{ route('income-types.create') }}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Create</p>
+                        </a>
+                      </li>
+                    @endcan
+                  </ul>
+                </li>
+              @endcanany
 
-            @canany(['Create-Income-Types', 'Read-Income-Types'])
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-money-check-alt"></i>
-                  <p>
-                    Income-Types
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  @can('Read-Income-Types')
-                    <li class="nav-item">
-                      <a href="{{ route('income-types.index') }}" class="nav-link">
-                        <i class="fas fa-list nav-icon"></i>
-                        <p>Index</p>
-                      </a>
-                    </li>
-                  @endcan
-                  @can('Create-Income-Types')
-                    <li class="nav-item">
-                      <a href="{{ route('income-types.create') }}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Create</p>
-                      </a>
-                    </li>
-                  @endcan
-                </ul>
-              </li>
-            @endcanany
+              @canany(['Create-Expense-Types', 'Read-Expense-Type'])
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-money-bill-alt"></i>
+                    <p>
+                      Expense-Types
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    @can('Read-Expense-Type')
+                      <li class="nav-item">
+                        <a href="{{ route('expense-types.index') }}" class="nav-link">
+                          <i class="fas fa-list nav-icon"></i>
+                          <p>Index</p>
+                        </a>
+                      </li>
+                    @endcan
+                    @can('Create-Expense-Types')
+                      <li class="nav-item">
+                        <a href="{{ route('expense-types.create') }}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Create</p>
+                        </a>
+                      </li>
+                    @endcan
+                  </ul>
+                </li>
+              @endcanany
 
-            @canany(['Create-Expense-Types', 'Read-Expense-Type'])
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-money-bill-alt"></i>
-                  <p>
-                    Expense-Types
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  @can('Read-Expense-Type')
-                    <li class="nav-item">
-                      <a href="{{ route('expense-types.index') }}" class="nav-link">
-                        <i class="fas fa-list nav-icon"></i>
-                        <p>Index</p>
-                      </a>
-                    </li>
-                  @endcan
-                  @can('Create-Expense-Types')
-                    <li class="nav-item">
-                      <a href="{{ route('expense-types.create') }}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Create</p>
-                      </a>
-                    </li>
-                  @endcan
-                </ul>
-              </li>
-            @endcanany
+              @canany(['Create-Wallets', 'Read-Wallets'])
+                <li class="nav-header">Financial Management</li>
+              @endcanany
 
-            @canany(['Create-Wallets', 'Read-Wallets'])
-              <li class="nav-header">Financial Management</li>
-            @endcanany
-
-            @canany(['Create-Wallets', 'Read-Wallets'])
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-wallet"></i>
-                  <p>
-                    Wallets
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  @can('Read-Wallets')
-                    <li class="nav-item">
-                      <a href="{{ route('wallets.index') }}" class="nav-link">
-                        <i class="fas fa-list nav-icon"></i>
-                        <p>Index</p>
-                      </a>
-                    </li>
-                  @endcan
-                  @can('Create-Wallets')
-                    <li class="nav-item">
-                      <a href="{{ route('wallets.create') }}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Create</p>
-                      </a>
-                    </li>
-                  @endcan
-                </ul>
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-wallet"></i>
-                  <p>
-                    Debits
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  @can('Read-Debits')
-                    <li class="nav-item">
-                      <a href="{{ route('debits.index') }}" class="nav-link">
-                        <i class="fas fa-list nav-icon"></i>
-                        <p>Index</p>
-                      </a>
-                    </li>
-                  @endcan
-                  @can('Create-Debits')
-                    <li class="nav-item">
-                      <a href="{{ route('debits.create') }}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Create</p>
-                      </a>
-                    </li>
-                  @endcan
-                </ul>
-              </li>
-            @endcanany
-
+              @canany(['Create-Wallets', 'Read-Wallets'])
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-wallet"></i>
+                    <p>
+                      Wallets
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    @can('Read-Wallets')
+                      <li class="nav-item">
+                        <a href="{{ route('wallets.index') }}" class="nav-link">
+                          <i class="fas fa-list nav-icon"></i>
+                          <p>Index</p>
+                        </a>
+                      </li>
+                    @endcan
+                    @can('Create-Wallets')
+                      <li class="nav-item">
+                        <a href="{{ route('wallets.create') }}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Create</p>
+                        </a>
+                      </li>
+                    @endcan
+                  </ul>
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-wallet"></i>
+                    <p>
+                      Debits
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    @can('Read-Debits')
+                      <li class="nav-item">
+                        <a href="{{ route('debits.index') }}" class="nav-link">
+                          <i class="fas fa-list nav-icon"></i>
+                          <p>Index</p>
+                        </a>
+                      </li>
+                    @endcan
+                    @can('Create-Debits')
+                      <li class="nav-item">
+                        <a href="{{ route('debits.create') }}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Create</p>
+                        </a>
+                      </li>
+                    @endcan
+                  </ul>
+                </li>
+              @endcanany
+            @endif
             @canany(['Create-Roles', 'Read-Roles', 'Create-Permissions', 'Read-Permissions'])
               <li class="nav-header">Roles & Permissions</li>
             @endcanany

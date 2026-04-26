@@ -76,7 +76,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
-        $role = Role::findById($id, 'admin');
+        $role = Role::findOrFail($id);
         return response()->view('cms.spatie.roles.edit', ['role' => $role]);
     }
 
