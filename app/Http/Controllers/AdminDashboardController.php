@@ -27,7 +27,7 @@ class AdminDashboardController extends Controller
         $authUser = auth('user')->user();
         $childs  = $authUser ? User::where('parent', $authUser->id)->count() : 0;
         $wallets = $authUser ? Wallet::where('user_id', $authUser->id)->count() : 0;
-        $debts   = $authUser ? Debit::where('user_id', $authUser->id)->count() : 0;
+        $debts   = $authUser ? Debit::where('main_user_id', $authUser->id)->count() : 0;
 
         return response()->view('cms.dashboard', [
             'admins'      => $admins,

@@ -16,9 +16,9 @@ class DebitController extends Controller
      */
     public function index()
     {
-        //
-        $debits = Debit::where('main_user_id', '=', request()->user('user')->id)
-        ->with('currency')->paginate(10);
+        $debits = Debit::where('main_user_id', request()->user('user')->id)
+            ->with('currency')
+            ->paginate(10);
         return response()->view('cms.debits.index', ['debits' => $debits]);
     }
 
@@ -47,11 +47,11 @@ class DebitController extends Controller
         $validator = Validator($request->all(), [
             'title' => 'required|string|min:5|max:20',
             'total' => 'required|integer|min:0',
-            'remain' => 'required', 
+            'remain' => 'required',
             'type' => 'required',
-            'payment_type' => 'required', 
+            'payment_type' => 'required',
             'date' => 'required',
-            'user_id' => 'required', 
+            'user_id' => 'required',
             //'currecny_id' => 'required'
 
         ]);
@@ -97,7 +97,7 @@ class DebitController extends Controller
         $debit = Debit::findOrFail($id);
         $users = User::where('id', '!=', request()->user('user')->id)->get();
         $currencies = Currency::where('active', true)->get();
-        return response()->view('cms.debits.edit', ['debit' => $debit , 'users' => $users, 'currencies' => $currencies]);
+        return response()->view('cms.debits.edit', ['debit' => $debit, 'users' => $users, 'currencies' => $currencies]);
     }
 
     /**
@@ -113,11 +113,11 @@ class DebitController extends Controller
         $validator = Validator($request->all(), [
             'title' => 'required|string|min:5|max:20',
             'total' => 'required|integer|min:0',
-            'remain' => 'required', 
+            'remain' => 'required',
             'type' => 'required',
-            'payment_type' => 'required', 
+            'payment_type' => 'required',
             'date' => 'required',
-            'user_id' => 'required', 
+            'user_id' => 'required',
             //'currecny_id' => 'required'
 
         ]);

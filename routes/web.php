@@ -48,13 +48,15 @@ Route::prefix('cms/admin')->middleware('guest:admin')->group(function () {
 Route::prefix('cms/user')->middleware('guest:user')->group(function () {
     Route::get('login', [UserAuthController::class, 'showLogin'])->name('auth-user.login.view');
     Route::post('login', [UserAuthController::class, 'login'])->name('auth-user.login');
+    Route::post('guest-login', [UserAuthController::class, 'loginAsGuest'])
+        ->name('auth.guest-login');
 });
 
-Route::prefix('cms/admin')->middleware('auth:admin,user')->group(function () {
+Route::prefix('cms/admin')->middleware(['auth:admin,user', 'guest.restriction'])->group(function () {
     //$admins = Admin::with(['city'])->paginate(10);
     //Route::view('', 'cms.dashboard')->name('cms.dashboard');
     Route::get('', [AdminDashboardController::class, 'index'])->name('cms.dashboard');
-    //Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class);
 });
 
 Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
@@ -65,8 +67,8 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
 
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
-    Route::resource('users', UserController::class);
-    
+    /* Route::resource('users', UserController::class); */
+
     Route::resource('admins.permissions', AdminPermissionController::class);
     Route::resource('role.permissions', RolePermissionController::class);
 
@@ -84,7 +86,7 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
         ->name('auth.logout');
 });
 
-Route::prefix('cms/admin')->middleware('auth:user')->group(function () {
+Route::prefix('cms/admin')->middleware(['auth:user', 'guest.restriction'])->group(function () {
     Route::resource('income-types', IncomeTypeController::class);
     Route::resource('expense-types', ExpenseTypeController::class);
     Route::resource('wallets', WalletController::class);

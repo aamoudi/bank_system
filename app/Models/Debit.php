@@ -18,4 +18,9 @@ class Debit extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function mainUser()
+    {
+        return $this->belongsTo(User::class, 'main_user_id', 'id');
+    }
 }

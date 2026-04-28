@@ -77,6 +77,21 @@
             </div>
             <!-- /.col -->
           </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div style="border-top: 1px solid #dee2e6; margin-bottom: 15px;"></div>
+              <button type="button" onclick="loginAsGuest()" class="btn btn-outline-secondary btn-block"
+                style="border: 2px dashed #6c757d; color: #6c757d;">
+                <i class="fas fa-eye mr-2"></i>
+                Login as Guest <small>(View Only)</small>
+              </button>
+              <p class="text-muted text-center mt-2" style="font-size: 11px;">
+                <i class="fas fa-info-circle"></i>
+                Guest access allows viewing data only — no modifications
+              </p>
+            </div>
+          </div>
         </form>
 
 
@@ -154,6 +169,22 @@
         login();
       }
     });
+
+    function loginAsGuest() {
+      // Show loading state
+      event.target.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Logging in...';
+      event.target.disabled = true;
+
+      axios.post('/cms/user/guest-login')
+        .then(function(response) {
+          window.location.href = '{{ route('cms.dashboard') }}'
+        })
+        .catch(function(error) {
+          showToaster('Guest login failed, please try again', false);
+          event.target.innerHTML = '<i class="fas fa-eye mr-2"></i> Login as Guest <small>(View Only)</small>';
+          event.target.disabled = false;
+        });
+    }
   </Script>
 
 </body>

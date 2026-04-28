@@ -114,4 +114,21 @@ class UserAuthController extends Controller
         // $request->user()->logout();
         return redirect()->route('auth.login.view');
     }
+
+    public function loginAsGuest()
+    {
+        $guest = \App\Models\User::where('email', 'guest@masareefi.com')->first();
+
+        if (!$guest) {
+            return response()->json([
+                'message' => 'Guest account not available'
+            ], 404);
+        }
+
+        auth('user')->login($guest);
+
+        return response()->json([
+            'message' => 'Logged in as guest successfully'
+        ], 200);
+    }
 }

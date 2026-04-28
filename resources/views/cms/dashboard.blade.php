@@ -11,6 +11,12 @@
   Permissions: {{ $debugAdmin ? $debugAdmin->getAllPermissions()->pluck('name') : 'NULL' }}
 </div>
  --}}
+
+@if (session('guest_blocked'))
+  <div style="display:none" id="guest-blocked-msg">{{ session('guest_blocked') }}</div>
+@endif
+
+
 @extends('cms.parent')
 
 @section('title', 'Dashboard')
@@ -320,4 +326,20 @@
   <script src="{{ asset('cms/dist/js/demo.js') }}"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="{{ asset('cms/dist/js/pages/dashboard.js') }}"></script>
+
+  @if (session('guest_blocked'))
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+          title: 'Guest Access Only',
+          html: '<i class="fas fa-lock" style="font-size:40px;color:#e67e22;"></i>' +
+            '<br><br>Guests cannot access <strong>Profile Settings</strong> or <strong>Change Password</strong>.' +
+            '<br>Please login with a full account.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#e67e22',
+        });
+      });
+    </script>
+  @endif
 @endsection

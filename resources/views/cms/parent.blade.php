@@ -28,6 +28,29 @@
 <body class="hold-transition sidebar-mini">
   <!-- Site wrapper -->
   <div class="wrapper">
+
+    {{-- GUEST BANNER --}}
+    @if (Auth::guard('user')->check() && Auth::guard('user')->user()->email === 'guest@masareefi.com')
+      <div
+        style="
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+        <i class="fas fa-eye mr-2"></i>
+        You are browsing as a <strong>Guest</strong> — View Only Access.
+        Actions like creating, editing, and deleting are disabled.
+        <a href="{{ route('auth.login.view') }}" style="color:white; text-decoration:underline; margin-left:15px;">
+          Login with full access →
+        </a>
+      </div>
+    @endif
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
@@ -537,40 +560,41 @@
 
             @if (Auth::guard('user')->check())
               <li class="nav-header">Settings</li>
-              <li class="nav-item">
-                <a href="{{ route('auth-user.edit-profile') }}" class="nav-link">
-                  <i class="nav-icon fas fa-user-edit"></i>
-                  <p>Edit Profile</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('auth-user.edit-password') }}" class="nav-link">
-                  <i class="nav-icon fas fa-lock"></i>
-                  <p>Change Password</p>
-                </a>
-              </li>
+
+              {{-- Hide profile/password for guest --}}
+              @if (Auth::guard('user')->user()->email !== 'guest@masareefi.com')
+                <li class="nav-item">
+                  <a href="{{ route('auth-user.edit-profile') }}" class="nav-link">
+                    <i class="nav-icon fas fa-user-edit"></i>
+                    <p>Edit Profile</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('auth-user.edit-password') }}" class="nav-link">
+                    <i class="nav-icon fas fa-lock"></i>
+                    <p>Change Password</p>
+                  </a>
+                </li>
+              @else
+                {{-- Show disabled links for guest --}}
+                <li class="nav-item">
+                  <a href="#" class="nav-link text-muted" onclick="guestSettingsAlert(event)"
+                    style="opacity:0.5; cursor:not-allowed;">
+                    <i class="nav-icon fas fa-user-edit"></i>
+                    <p>Edit Profile <small><i class="fas fa-lock"></i></small></p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link text-muted" onclick="guestSettingsAlert(event)"
+                    style="opacity:0.5; cursor:not-allowed;">
+                    <i class="nav-icon fas fa-lock"></i>
+                    <p>Change Password <small><i class="fas fa-lock"></i></small></p>
+                  </a>
+                </li>
+              @endif
+
               <li class="nav-item">
                 <a href="{{ route('auth-user.logout') }}" class="nav-link">
-                  <i class="nav-icon fas fa-sign-out-alt"></i>
-                  <p>Logout</p>
-                </a>
-              </li>
-            @else
-              <li class="nav-header">Settings</li>
-              <li class="nav-item">
-                <a href="{{ route('auth.edit-profile') }}" class="nav-link">
-                  <i class="nav-icon fas fa-user-edit"></i>
-                  <p>Edit Profile</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('auth.edit-password') }}" class="nav-link">
-                  <i class="nav-icon fas fa-lock"></i>
-                  <p>Change Password</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('auth.logout') }}" class="nav-link">
                   <i class="nav-icon fas fa-sign-out-alt"></i>
                   <p>Logout</p>
                 </a>
@@ -637,6 +661,31 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="{{ asset('js/crud.js') }}"></script>
 
+  {{-- Guest restriction interceptor --}}
+  <script>
+    axios.interceptors.response.use(
+      function(response) {
+        return response;
+      },
+      function(error) {
+        if (error.response && error.response.status === 403 &&
+          error.response.data.is_guest) {
+
+          Swal.fire({
+            title: 'Guest Access Only',
+            html: '<i class="fas fa-lock" style="font-size:40px;color:#e67e22;"></i>' +
+              '<br><br>You are logged in as a <strong>Guest</strong>.' +
+              '<br>This action requires a full account.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#e67e22',
+          });
+        }
+        return Promise.reject(error);
+      }
+    );
+  </script>
+
   <!-- DataTables -->
   <script src="{{ asset('cms/plugins/datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('cms/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -650,6 +699,21 @@
   <script src="{{ asset('cms/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
   <script src="{{ asset('cms/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('cms/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+  <script>
+    function guestSettingsAlert(e) {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Guest Access Only',
+        html: '<i class="fas fa-lock" style="font-size:40px;color:#e67e22;"></i>' +
+          '<br><br>Profile settings are not available for <strong>Guest</strong> accounts.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#e67e22',
+      });
+    }
+  </script>
+
   @yield('scripts')
 </body>
 
