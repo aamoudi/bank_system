@@ -32,5 +32,12 @@ Route::prefix('auth/')->middleware('auth:api')->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::apiResource('cities', CityController::class);
+    Route::apiResource('cities', CityController::class)
+        ->names([
+            'index'   => 'api.cities.index',
+            'store'   => 'api.cities.store',
+            'show'    => 'api.cities.show',
+            'update'  => 'api.cities.update',
+            'destroy' => 'api.cities.destroy',
+        ]);
 });

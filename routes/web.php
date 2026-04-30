@@ -69,9 +69,29 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
     Route::resource('permissions', PermissionController::class);
     /* Route::resource('users', UserController::class); */
 
-    Route::resource('admins.permissions', AdminPermissionController::class);
-    Route::resource('role.permissions', RolePermissionController::class);
+    Route::resource('admins.permissions', AdminPermissionController::class)
+        ->names([                                    // ADD EXPLICIT NAMES
+            'index'   => 'admins.permissions.index',
+            'create'  => 'admins.permissions.create',
+            'store'   => 'admins.permissions.store',
+            'show'    => 'admins.permissions.show',
+            'edit'    => 'admins.permissions.edit',
+            'update'  => 'admins.permissions.update',
+            'destroy' => 'admins.permissions.destroy',
+        ]);
 
+    Route::resource('role.permissions', RolePermissionController::class)
+        ->names([                                    // ADD EXPLICIT NAMES
+            'index'   => 'role.permissions.index',
+            'create'  => 'role.permissions.create',
+            'store'   => 'role.permissions.store',
+            'show'    => 'role.permissions.show',
+            'edit'    => 'role.permissions.edit',
+            'update'  => 'role.permissions.update',
+            'destroy' => 'role.permissions.destroy',
+        ]);
+
+        
     Route::delete('currencies/{id}/restore', [CurrencyController::class, 'restore'])->name('currencies.restore');
 
     Route::get('admin-edit-password', [AdminAuthController::class, 'editPassword'])
