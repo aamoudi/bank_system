@@ -1,15 +1,54 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
+# Environment files - NEVER commit these
 .env
-.env.backup
+.env.*
+!.env.example
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Compiled/cached files
+/bootstrap/cache/*.php
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+
+# Keep directory structure
+!/storage/framework/cache/.gitkeep
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/views/.gitkeep
+!/storage/logs/.gitkeep
+
+# Passport keys - sensitive
+/storage/oauth-private.key
+/storage/oauth-public.key
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Personal notes
+Git Notes.txt
+*.txt
+
+# Test results
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
+phpunit.result.cache
+
+# Docker local override
+docker-compose.override.yml
+
+# Aiven SSL cert (contains sensitive data)
+docker/aiven-ca.pem
+
+# Build artifacts
 npm-debug.log
 yarn-error.log
-.vscode/sftp.json
-.vscode/sftp.json
-.vscode/sftp.json
