@@ -79,4 +79,8 @@ EXPOSE 80
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
+# Copy Aiven SSL certificate
+COPY docker/aiven-ca.pem /var/www/html/docker/aiven-ca.pem
+RUN chmod 644 /var/www/html/docker/aiven-ca.pem
+
 CMD ["/start.sh"]
