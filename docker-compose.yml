@@ -6,23 +6,20 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:26817"
+      - "8080:80"
     environment:
       - APP_NAME=MASAREEFI
       - APP_ENV=local
-      - APP_KEY=base64:l/3YDJNfb2DP9InslzPtIyVyJyTpO6sahq/gAGIIxKQ=
+      - APP_KEY=base64:YOUR_KEY_HERE
       - APP_DEBUG=true
       - APP_URL=http://localhost:8080
       - DB_CONNECTION=mysql
-      - DB_HOST=mysql-72244cf-masareefi.l.aivencloud.com
-      - DB_PORT=26817
-      - DB_DATABASE=defaultdb
-      - DB_USERNAME=avnadmin
+      - DB_HOST=your_aiven_host
+      - DB_PORT=3306
+      - DB_DATABASE=your_db
+      - DB_USERNAME=your_user
       - DB_PASSWORD=
-      - DB_SSLMODE=require
-      - MYSQL_ATTR_SSL_CA=/var/www/html/docker/aiven-ca.pem
       - CACHE_DRIVER=file
       - SESSION_DRIVER=file
     volumes:
       - ./storage:/var/www/html/storage
-      - ./docker/aiven-ca.pem:/var/www/html/docker/aiven-ca.pem

@@ -45,6 +45,7 @@ phpunit.result.cache
 
 # Docker local override
 docker-compose.override.yml
+docker-composer.yml
 
 # Aiven SSL cert (contains sensitive data)
 docker/aiven-ca.pem
