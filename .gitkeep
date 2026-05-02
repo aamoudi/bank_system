@@ -1,0 +1,6 @@
+# Run in your project directory
+echo "" > storage/framework/cache/.gitkeep
+echo "" > storage/framework/sessions/.gitkeep
+echo "" > storage/framework/views/.gitkeep
+echo "" > storage/logs/.gitkeep
+echo "" > bootstrap/cache/.gitkeep

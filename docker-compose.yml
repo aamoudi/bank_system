@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8080:26817"
     environment:
       - APP_NAME=MASAREEFI
       - APP_ENV=local
@@ -19,7 +19,10 @@ services:
       - DB_DATABASE=defaultdb
       - DB_USERNAME=avnadmin
       - DB_PASSWORD=AVNS_rRh87S0wBemh_XD9oCf
+      - DB_SSLMODE=require
+      - MYSQL_ATTR_SSL_CA=/var/www/html/docker/aiven-ca.pem
       - CACHE_DRIVER=file
       - SESSION_DRIVER=file
     volumes:
       - ./storage:/var/www/html/storage
+      - ./docker/aiven-ca.pem:/var/www/html/docker/aiven-ca.pem
