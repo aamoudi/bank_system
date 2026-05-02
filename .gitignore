@@ -48,7 +48,7 @@ docker-compose.override.yml
 docker-composer.yml
 
 # Aiven SSL cert (contains sensitive data)
-docker/aiven-ca.pem
+#docker/aiven-ca.pem
 
 # Build artifacts
 npm-debug.log
