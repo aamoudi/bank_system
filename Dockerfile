@@ -62,7 +62,11 @@ RUN mkdir -p \
     storage/framework/views \
     storage/framework/cache/data \
     storage/logs \
-    bootstrap/cache
+    bootstrap/cache \
+    /var/log/nginx \
+    /var/log/php-fpm \
+    /var/log/supervisor
+
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
