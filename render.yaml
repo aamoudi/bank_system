@@ -17,6 +17,10 @@ services:
           type: web
           name: masareefi
           property: host
+      - key: APP_URL
+        value: https://masareefi.onrender.com
+      - key: ASSET_URL
+        value: https://masareefi.onrender.com    
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
